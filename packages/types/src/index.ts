@@ -1,1 +1,1 @@
-export * from "./song";
+export type { Song } from "./song";
