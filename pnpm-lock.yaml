@@ -44,6 +44,9 @@ importers:
         specifier: ^19.2.0
         version: 19.2.4(react@19.2.4)
     devDependencies:
+      '@royalty/types':
+        specifier: workspace:*
+        version: link:../../packages/types
       '@tanstack/devtools-vite':
         specifier: latest
         version: 0.5.3(vite@7.3.1(@types/node@22.19.15)(jiti@2.6.1)(lightningcss@1.31.1)(tsx@4.21.0))
@@ -92,6 +95,9 @@ importers:
       '@hono/node-server':
         specifier: ^1.19.11
         version: 1.19.11(hono@4.12.5)
+      '@royalty/types':
+        specifier: workspace:*
+        version: link:../../packages/types
       hono:
         specifier: ^4.12.5
         version: 4.12.5
@@ -105,6 +111,8 @@ importers:
       typescript:
         specifier: ^5.8.3
         version: 5.9.3
+
+  packages/types: {}
 
 packages:
 

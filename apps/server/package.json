@@ -9,7 +9,8 @@
   },
   "dependencies": {
     "@hono/node-server": "^1.19.11",
-    "hono": "^4.12.5"
+    "hono": "^4.12.5",
+    "@royalty/types": "workspace:*"
   },
   "devDependencies": {
     "@types/node": "^20.11.17",
