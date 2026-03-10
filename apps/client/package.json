@@ -1,5 +1,5 @@
 {
-  "name": "client",
+  "name": "@royalty/client",
   "private": true,
   "type": "module",
   "imports": {
