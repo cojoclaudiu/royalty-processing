@@ -1,6 +1,7 @@
 import { serve } from "@hono/node-server";
 import { Hono } from "hono";
 import type { Song } from "@royalty/types";
+import { cors } from "hono/cors";
 
 const app = new Hono();
 
@@ -27,7 +28,14 @@ const songs: Song[] = [
   },
 ];
 
-app.get("/songs", (c) => {
+app.use(
+  "/api/*",
+  cors({
+    origin: "http://localhost:3001",
+  }),
+);
+
+app.get("/api/v1/songs", (c) => {
   return c.json(songs);
 });
 
