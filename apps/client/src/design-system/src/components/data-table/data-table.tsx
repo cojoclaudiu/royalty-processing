@@ -39,7 +39,10 @@ export function DataTable<TData>({
             table.getRowModel().rows.map((row) => (
               <Table.Row key={row.id}>
                 {row.getVisibleCells().map((cell) => (
-                  <Table.Cell key={cell.id}>
+                  <Table.Cell
+                    key={cell.id}
+                    className={cell.column.columnDef.meta?.className}
+                  >
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </Table.Cell>
                 ))}
