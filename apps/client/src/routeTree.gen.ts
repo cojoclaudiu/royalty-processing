@@ -9,50 +9,93 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as IndexRouteImport } from './routes/index'
+import { Route as tabsRouteRouteImport } from './routes/(tabs)/route'
+import { Route as tabsIndexRouteImport } from './routes/(tabs)/index'
+import { Route as tabsHistoryRouteImport } from './routes/(tabs)/history'
 
-const IndexRoute = IndexRouteImport.update({
+const tabsRouteRoute = tabsRouteRouteImport.update({
+  id: '/(tabs)',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const tabsIndexRoute = tabsIndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => tabsRouteRoute,
+} as any)
+const tabsHistoryRoute = tabsHistoryRouteImport.update({
+  id: '/history',
+  path: '/history',
+  getParentRoute: () => tabsRouteRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
+  '/history': typeof tabsHistoryRoute
+  '/': typeof tabsIndexRoute
 }
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
+  '/history': typeof tabsHistoryRoute
+  '/': typeof tabsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/': typeof IndexRoute
+  '/(tabs)': typeof tabsRouteRouteWithChildren
+  '/(tabs)/history': typeof tabsHistoryRoute
+  '/(tabs)/': typeof tabsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/history' | '/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/history' | '/'
+  id: '__root__' | '/(tabs)' | '/(tabs)/history' | '/(tabs)/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
+  tabsRouteRoute: typeof tabsRouteRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/': {
-      id: '/'
+    '/(tabs)': {
+      id: '/(tabs)'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof tabsRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/(tabs)/': {
+      id: '/(tabs)/'
       path: '/'
       fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof tabsIndexRouteImport
+      parentRoute: typeof tabsRouteRoute
+    }
+    '/(tabs)/history': {
+      id: '/(tabs)/history'
+      path: '/history'
+      fullPath: '/history'
+      preLoaderRoute: typeof tabsHistoryRouteImport
+      parentRoute: typeof tabsRouteRoute
     }
   }
 }
 
+interface tabsRouteRouteChildren {
+  tabsHistoryRoute: typeof tabsHistoryRoute
+  tabsIndexRoute: typeof tabsIndexRoute
+}
+
+const tabsRouteRouteChildren: tabsRouteRouteChildren = {
+  tabsHistoryRoute: tabsHistoryRoute,
+  tabsIndexRoute: tabsIndexRoute,
+}
+
+const tabsRouteRouteWithChildren = tabsRouteRoute._addFileChildren(
+  tabsRouteRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
+  tabsRouteRoute: tabsRouteRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
