@@ -1,16 +1,8 @@
 import { Meter as MeterBase } from '@base-ui/react/meter'
 import { assignInlineVars } from '@vanilla-extract/dynamic'
 import { cn } from '#/lib'
-import { tokens } from '../../styles/tokens'
 import { styles } from './meter.css'
-
-function progressColor(value: number | null) {
-  if (value === null) return undefined
-
-  if (value < 20) return tokens.colors.progress.low
-  if (value < 50) return tokens.colors.progress.mid
-  return tokens.colors.progress.high
-}
+import { progressColor } from '../../styles/lib/progress-color'
 
 export function MeterRoot({
   className,
